@@ -1,4 +1,4 @@
-name: PHPStan analysis  # Analyse statique du code PHP
+name: PHPStan analysis  # Analyse statique du code
 
 on:
   push:
@@ -8,20 +8,21 @@ on:
 
 jobs:
   phpstan:
-    runs-on: ubuntu-latest  # Machine Linux qui va exécuter le job
+    runs-on: ubuntu-latest  # Machine virtuelle Ubuntu sur GitHub
 
     steps:
-      - uses: actions/checkout@v4       # Clone le dépôt dans la VM CI
+      - uses: actions/checkout@v4       # Clone le dépôt dans l'environnement CI
 
-      - uses: shivammathur/setup-php@v2 # Installe PHP dans la VM
+      - uses: shivammathur/setup-php@v2 # Installe PHP dans l'environnement CI
         with:
-          php-version: '8.2'            # Version PHP avec laquelle on analyse
-          
+          php-version: '8.4'            # On garde la même version de PHP que dans phpunit.yml
+
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --no-suggest
-        # Installe vendor/ (dont phpstan)
+        # Récupère vendor/ pour que phpstan soit dispo
 
       - name: Run PHPStan
         run: ./vendor/bin/phpstan analyse --no-progress
-        # Exécute l'analyse statique selon phpstan.neon
+        # Analyse statique du code selon phpstan.neon
+
 

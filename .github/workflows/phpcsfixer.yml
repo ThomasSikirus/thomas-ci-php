@@ -8,22 +8,23 @@ on:
 
 jobs:
   phpcsfixer:
-    runs-on: ubuntu-latest  # Machine Ubuntu GitHub Actions
+    runs-on: ubuntu-latest  # Machine virtuelle Ubuntu GitHub Actions
 
     steps:
-      - uses: actions/checkout@v4       # Récupère le code du repo
+      - uses: actions/checkout@v4       # Récupère ton code
 
       - uses: shivammathur/setup-php@v2 # Installe PHP
         with:
-          php-version: '8.2'            # Version PHP pour exécuter php-cs-fixer
-
+          php-version: '8.4'            # Même version pour rester cohérent
+          
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --no-suggest
-        # Installe les dépendances Composer (dont php-cs-fixer)
+        # Installe toutes les dépendances (dont php-cs-fixer)
 
       - name: Run PHP CS Fixer (dry-run)
         run: ./vendor/bin/php-cs-fixer fix --diff --dry-run --verbose
-        # --dry-run = n'écrit pas dans les fichiers
-        # si le style n'est pas correct => ce job échoue => utile pour la capture d'écran rouge
+        # Vérifie le style sans le modifier
+        # Si le style est incorrect -> le job échoue (croix rouge)
+
 
 
