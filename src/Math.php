@@ -4,11 +4,10 @@ namespace App;
 
 class Math
 {
-        public function add(float $a, float $b): float
+    public function add(float $a, float $b): float
     {
         return $a + $b;
     }
-
 
     public function sub(float $a, float $b): float
     {
@@ -28,5 +27,4 @@ class Math
 
         return $a / $b;
     }
-
 }
