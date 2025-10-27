@@ -1,0 +1,29 @@
+name: PHPUnit tests  # Nom du workflow tel qu'il apparaîtra dans GitHub Actions
+
+on:
+  push:              # Déclenché à chaque push
+    branches: [ "main" ]  # seulement pour la branche main
+  pull_request:      # et aussi sur les Pull Requests vers main
+    branches: [ "main" ]
+
+jobs:
+  phpunit:                 # nom du job
+    runs-on: ubuntu-latest # machine virtuelle Ubuntu fournie par GitHub
+
+    steps:
+      - uses: actions/checkout@v4        # Récupère ton code dans la VM CI
+
+      - uses: shivammathur/setup-php@v2  # Installe PHP dans la VM
+        with:
+          php-version: '8.2'             # Version PHP utilisée pour exécuter les tests
+          coverage: none                 # Pas de coverage demandé
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --no-suggest
+        # Installe les dépendances de Composer (phpunit inclus)
+
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit
+        # Lance les tests unitaires
+
+
